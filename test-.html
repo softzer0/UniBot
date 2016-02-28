@@ -1,0 +1,531 @@
+	<div id="globalsearch" class="globalsearch">
+			<form action="search.php?do=process" method="post" id="navbar_search" class="navbar_search">
+				
+				<input type="hidden" name="securitytoken" value="guest" />
+				<input type="hidden" name="do" value="process" />
+				<span class="textboxcontainer"><span><input type="text" value="" name="query" class="textbox" tabindex="99"/></span></span>
+				<span class="buttoncontainer"><span><input type="image" class="searchbutton" src="/images/buttons/search.png" name="submit" onclick="document.getElementById('navbar_search').submit;" tabindex="100"/></span></span>
+			</form>
+			<ul class="navbar_advanced_search">
+				<li><a href="search.php" accesskey="4">Advanced Search</a></li>
+				
+			</ul>
+		</div>
+	
+</div>
+</div><!-- closing div for above_body -->
+
+<div class="body_wrapper">
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#FFFFFF" id="main">
+  <tr>
+    <td valign="top" style="min-width:600px;">
+
+<div id="breadcrumb" class="breadcrumb">
+	<ul class="floatcontainer">
+		<li class="navbithome"><a href="index.php" accesskey="1"><img src="/images/misc/navbit-home.png" alt="Home" /></a></li>
+		
+		
+	<li class="navbit lastnavbit"><span>Advanced Search</span></li>
+
+	</ul>
+	<hr />
+</div>
+
+
+ 
+
+
+	<form action="profile.php?do=dismissnotice" method="post" id="notices" class="notices">
+		<input type="hidden" name="do" value="dismissnotice" />
+		<input type="hidden" name="s" value="" />
+		<input type="hidden" name="securitytoken" value="guest" />
+		<input type="hidden" id="dismiss_notice_hidden" name="dismiss_noticeid" value="" />
+		<input type="hidden" name="url" value="" />
+		<ol>
+			<li class="restore" id="navbar_notice_1">
+	
+	If this is your first visit, be sure to
+		check out the <a href="faq.php" target="_blank"><b>FAQ</b></a> by clicking the
+		link above. You may have to <a href="register.php" target="_blank"><b>register</b></a>
+		before you can post: click the register link above to proceed. To start viewing messages,
+		select the forum that you want to visit from the selection below.
+</li>
+		</ol>
+	</form>
+
+
+
+	<div class="block">
+		<ul id="searchtypeswitcher" class="floatcontainer">
+			<li class="selected"><a href="search.php?search_type=1">Search Single Content Type</a></li>
+			<li><a href="search.php">Search Multiple Content Types</a></li>
+		</ul>
+	   	<div class="blockbody formcontrols">
+			<form id="searchtypes" action="search.php" method="post" class="">
+	<h3 class="blocksubhead">Search In</h3>
+	<div class="section">
+		<div class="blockrow">
+			<label for="search_type">Search Type:</label>
+			<select class="primary" id="search_type" name="contenttypeid" tabindex="1" onchange="change_type()">
+			
+	<option value="3" class="" >Forums</option>
+
+	<option value="1" class="" selected="selected">Posts</option>
+
+	<option value="7" class="" >Groups</option>
+
+	<option value="5" class="" >Group Messages</option>
+
+	<option value="11" class="" >Visitor Messages</option>
+
+				
+			</select>
+		</div>
+	</div>
+<noscript>
+	<input class="button" type="submit" tabindex="1" value="Go" />
+</noscript>
+
+	<input type="hidden" name="search_type" value="1" />
+	<input type="hidden" name="s" value="" />
+	<input type="hidden" name="securitytoken" value="guest" />
+</form>
+
+			
+
+			<div id="vb_search_params">
+				<form action="search.php?do=process" method="post" name="vbform" id="searchform" class="">
+
+	<h3 class="blocksubhead">
+		
+			Search for Posts
+		
+	</h3>
+	
+	<div class="section">
+
+		<div class="blockrow">
+			<label for="keyword">Keyword(s):</label>
+			<ul class="multifield group">
+				<li>
+					<input id="keyword" type="text" class="textbox" name="query" tabindex="1" value="" />
+				</li>
+
+				<li>
+					<select id="titleonly" name="titleonly" tabindex="1">
+						<option value="0" selected="selected">Search Entire Posts</option>
+						<option value="1" >Search Titles Only</option>
+					</select>		
+				</li>
+			</ul>
+		</div>
+
+		<div class="blockrow">
+			<label for="keyword">User Name:</label>
+			<ul class="multifield group">
+				<li>
+					<div id="userfield" class="popupmenu nomouseover noclick nohovermenu">
+						<input type="text" class="textbox popupctrl" name="searchuser" id="userfield_txt" tabindex="1" value="" />
+					</div>
+				</li>
+
+				<li>
+					<select name="starteronly" tabindex="1">
+						<option value="0" selected="selected">Find Latest Posts by User</option>
+						<option value="1" >Find Threads Started by User</option>
+					</select>
+				</li>
+				
+				<li>
+					<label for="cb_exactname">
+						<input type="checkbox" name="exactname" value="1" tabindex="1" id="cb_exactname"  /> Exact name
+					</label>
+				</li>
+			</ul>
+		</div>
+
+		<div class="blockrow">
+			<label for="keyword">Tag:</label>
+			<div id="tag_add" class="popupmenu nomouseover noclick nohovermenu popupcustom">
+				<input type="text" class="textbox primary popupctrl" name="tag" id="tag_add_input" tabindex="1" value="" />
+			</div>
+		</div>
+
+		
+	</div>
+
+	<div class="blockfoot actionbuttons">
+		<div class="group">
+			<input type="submit" class="button" name="dosearch" value="Search Now" tabindex="1" accesskey="s"/>
+			<input type="reset" class="button" value="Reset" tabindex="1" accesskey="r" />
+		</div>
+	</div>
+
+	<h3 class="blocksubhead">Additional Options <a class="collapse" id="collapse_additionaloptions" href="search.php?search_type=1#top"><img src="/images/buttons/collapse_40b.png" alt="" /></a></h3>
+	<div class="section" id="additionaloptions">
+		<div class="blockrow">
+				<label for="forumchoice">Search in Forum(s):</label>
+				<ul class="multifield stacked group">
+				<li>
+					<select class="primary" id="forumchoice" name="forumchoice[]" multiple="multiple" tabindex="1" size="5">
+						
+	<option value="" class="" selected="selected">Search All Open Forums</option>
+
+	<option value="subscribed" class="" >Search Subscribed Forums</option>
+
+	<option value="21" class="d0" > Visual Basic</option>
+
+	<option value="25" class="d1" > Visual Basic .NET</option>
+
+	<option value="1" class="d1" > Visual Basic 6 and Earlier</option>
+
+	<option value="95" class="d1" > Modern Windows Experience (Metro)</option>
+
+	<option value="37" class="d1" > Office Development</option>
+
+	<option value="4" class="d1" > ASP, VB Script</option>
+
+	<option value="3" class="d1" > Database Development</option>
+
+	<option value="33" class="d1" > Reporting</option>
+
+	<option value="8" class="d1" > API</option>
+
+	<option value="2" class="d1" > Games and Graphics Programming</option>
+
+	<option value="63" class="d2" > Game Demos</option>
+
+	<option value="19" class="d1" > COM and ActiveX</option>
+
+	<option value="64" class="d1" > Network Programming</option>
+
+	<option value="73" class="d1" > Visual Basic FAQs</option>
+
+	<option value="85" class="d1" > Slow Chat with the Microsoft Visual Basic team</option>
+
+	<option value="28" class="d0" > .NET</option>
+
+	<option value="31" class="d1" > ASP.NET</option>
+
+	<option value="93" class="d1" > MVC .Net</option>
+
+	<option value="30" class="d1" > C#</option>
+
+	<option value="86" class="d1" > WPF, WCF, WF</option>
+
+	<option value="88" class="d1" > Silverlight</option>
+
+	<option value="40" class="d1" > .NET Architecture and Design</option>
+
+	<option value="70" class="d1" > Mobile Development</option>
+
+	<option value="22" class="d0" > General</option>
+
+	<option value="41" class="d1" > General Developer Forum</option>
+
+	<option value="97" class="d1" > IoT, IoE, and Maker Forum</option>
+
+	<option value="77" class="d1" > Testers and Testing</option>
+
+	<option value="92" class="d1" > Application Testing</option>
+
+	<option value="72" class="d1" > Application Deployment</option>
+
+	<option value="81" class="d1" > Linux Development</option>
+
+	<option value="32" class="d1" > General PC</option>
+
+	<option value="67" class="d1" > VBForums Coding Contests</option>
+
+	<option value="68" class="d2" > Contest Entries</option>
+
+	<option value="51" class="d1" > Code It Better</option>
+
+	<option value="20" class="d1" > Maths Forum</option>
+
+	<option value="23" class="d0" > Other Languages</option>
+
+	<option value="16" class="d1" > Other BASIC</option>
+
+	<option value="9" class="d1" > C and C++</option>
+
+	<option value="10" class="d1" > Java</option>
+
+	<option value="27" class="d1" > PHP</option>
+
+	<option value="11" class="d1" > XML, HTML, Javascript, Web and CSS</option>
+
+	<option value="94" class="d1" > jQuery</option>
+
+	<option value="17" class="d1" > Assembly</option>
+
+	<option value="74" class="d1" > Other Programming Languages</option>
+
+	<option value="36" class="d0" > VBForums CodeBank</option>
+
+	<option value="46" class="d1" > CodeBank - Visual Basic .NET</option>
+
+	<option value="43" class="d1" > CodeBank - Visual Basic 6 and earlier</option>
+
+	<option value="65" class="d1" > CodeBank - ASP / ASP.NET / MVC / Web API</option>
+
+	<option value="44" class="d1" > CodeBank - C#</option>
+
+	<option value="47" class="d1" > CodeBank - C++</option>
+
+	<option value="66" class="d1" > CodeBank - Java / J#</option>
+
+	<option value="82" class="d1" > CodeBank - PHP</option>
+
+	<option value="76" class="d1" > Codebank - Game Programming</option>
+
+	<option value="99" class="d1" > Codebank - Mobile Development</option>
+
+	<option value="48" class="d1" > CodeBank - Other</option>
+
+	<option value="55" class="d0" > VBForums UtilityBank</option>
+
+	<option value="57" class="d1" > UtilityBank - Utilities</option>
+
+	<option value="58" class="d1" > UtilityBank - IDE Add-Ins</option>
+
+	<option value="59" class="d1" > UtilityBank - Components</option>
+
+	<option value="61" class="d1" > UtilityBank - Tutorials</option>
+
+	<option value="60" class="d1" > UtilityBank - Other</option>
+
+	<option value="24" class="d0" > Projects</option>
+
+	<option value="13" class="d1" > Project Requests</option>
+
+	<option value="15" class="d1" > Project Communication Area</option>
+
+	<option value="71" class="d1" > Support Images</option>
+
+	<option value="52" class="d0" > Jobs</option>
+
+	<option value="53" class="d1" > Open Positions (Jobs)</option>
+
+	<option value="54" class="d1" > Looking for Work</option>
+
+	<option value="89" class="d0" > Community</option>
+
+	<option value="6" class="d1" > Forum Feedback</option>
+
+	<option value="7" class="d1" > General Discussion / Chit Chat</option>
+
+	<option value="38" class="d2" > World Events</option>
+
+	<option value="39" class="d1" > Forum Test Area</option>
+
+					</select>
+				</li>
+				<li>
+					<label for="cb_childforums" class="rightcol">
+						<input id="cb_childforums" type="checkbox"  value="1" name="childforums" tabindex="1" checked="checked" />
+							Also search in child forums
+					</label>
+				</li>
+				</ul>
+		</div>
+
+		
+		<div class="blockrow">
+				<label for="prefixchoice">Search by Prefix:</label>
+				<select class="primary" id="prefixchoice" name="prefixchoice[]" size="5" multiple="multiple" tabindex="1">
+					<option value="" selected="selected">(any thread)</option>
+					<option value="-2" >(any prefix)</option>
+					<option value="-1" >(no prefix)</option>
+					
+	<optgroup label="VisualStudio">
+		
+	<option value="VS0203" class=""  selected="selected">VS 02/03</option>
+
+	<option value="VS2005" class=""  selected="selected">VS 2005</option>
+
+	<option value="VS2008" class=""  selected="selected">VS 2008</option>
+
+	<option value="VS2010" class=""  selected="selected">VS 2010</option>
+
+	<option value="VS2012" class=""  selected="selected">VS 2012</option>
+
+	<option value="VS2013" class=""  selected="selected">VS 2013</option>
+
+	<option value="VS2015" class=""  selected="selected">VS 2015</option>
+
+	</optgroup>
+
+	<optgroup label="Cvers">
+		
+	<option value="1011" class="" >1.0-1.2</option>
+
+	<option value="2" class="" >2.0</option>
+
+	<option value="3" class="" >3.0/LINQ</option>
+
+	<option value="4" class="" >4.0</option>
+
+	<option value="5" class="" >5.0</option>
+
+	</optgroup>
+
+	<optgroup label="officeDev">
+		
+	<option value="MSOfficeVintage" class=""  selected="selected">MsOfVint</option>
+
+	<option value="MSOffice03" class=""  selected="selected">MsOf03</option>
+
+	<option value="MSOffice07" class=""  selected="selected">MsOf07</option>
+
+	<option value="MSOffice10" class=""  selected="selected">MsOf10</option>
+
+	<option value="MsOf13" class=""  selected="selected">MsOf13</option>
+
+	<option value="MSOf365" class=""  selected="selected">MsOf365</option>
+
+	<option value="OpenOffice1" class=""  selected="selected">OpOf1</option>
+
+	<option value="OpenOffice2" class=""  selected="selected">OpOf2</option>
+
+	<option value="OpenOffice3" class=""  selected="selected">OpOf3</option>
+
+	</optgroup>
+
+	<optgroup label="Gamelanguage">
+		
+	<option value="VB6" class=""  selected="selected">[VB 6]</option>
+
+	<option value="VBNET" class=""  selected="selected">[VB.NET]</option>
+
+	<option value="VBA" class=""  selected="selected">[VBA]</option>
+
+	<option value="Csharp" class=""  selected="selected">[C#]</option>
+
+	<option value="CCplusplus" class=""  selected="selected">[C/C++]</option>
+
+	</optgroup>
+
+	<optgroup label="IoT Board">
+		
+	<option value="Ard" class=""  selected="selected">Arduino</option>
+
+	<option value="Netd" class=""  selected="selected">Netduino</option>
+
+	<option value="rPi" class=""  selected="selected">Raspberry Pi</option>
+
+	<option value="Gal" class=""  selected="selected">Intel Galileo</option>
+
+	<option value="Lego" class=""  selected="selected">Lego</option>
+
+	</optgroup>
+
+				</select>
+		</div>
+		
+
+		<div class="blockrow">
+			<label for="replyless">Find Threads with:</label>
+			<ul class="multifield group">
+				<li>
+					<select id="replyless" name="replyless" tabindex="1">
+						<option value="0" >At Least</option>
+						<option value="1" >At Most</option>
+					</select>
+				</li>
+				<li>
+					<label for="replylimit">
+					<input type="text" class="textbox" id="replylimit" name="replylimit" size="3" tabindex="1" value="" />
+					Replies
+					</label>
+				</li>
+			</ul>
+		</div>
+
+		<div class="blockrow">
+			<label for="searchdate">Find Posts:</label>
+			<ul class="multifield group">
+			<li>
+				<select id="searchdate" name="searchdate" tabindex="1">
+					<option value="0" selected="selected">Any Date</option>
+					<option value="lastvisit" >Your Last Visit</option>
+					<option value="1" >Yesterday</option>
+					<option value="7" >A Week Ago</option>
+
+					<option value="14" >2 Weeks Ago</option>
+					<option value="30"> A Month Ago</option>
+					<option value="90" >3 Months Ago</option>
+					<option value="180" >6 Months Ago</option>
+					<option value="365" >A Year Ago</option>
+				</select>
+			</li>
+			<li>
+				<select name="beforeafter" tabindex="1">
+					<option value="after" >and Newer</option>
+					<option value="before" >and Older</option>
+				</select>
+			</li>
+			</ul>
+		</div>
+
+		
+		<div class="blockrow">
+			<label for="sortby">Sort Results by:</label>
+			<ul class="multifield group">
+			<li>
+				<select id="sortby" name="sortby" tabindex="1">
+					<option value="title" >Title</option>
+					<option value="replycount" >Number of Replies</option>
+					<option value="views" >Number of Views</option>
+					<option value="threadstart" >Thread Start Date</option>
+					<option value="dateline" selected="selected">Last Posting Date</option>
+					<option value="user"  >User Name</option>
+					<option value="forum" >VBForums</option>
+				</select>
+			</li>
+			<li>
+				<select name="order" class="" tabindex="1">
+					<option value="descending" selected="selected">in Descending Order</option>
+					<option value="ascending" >in Ascending Order</option>
+				</select>
+			</li>
+			</ul>
+		</div>
+			
+		<div class="blockrow">
+			<label>Show Results as:</label>
+			<ul class="checkradio group rightcol">
+			<li><label for="rb_showposts_0"><input type="radio" name="showposts" value="0" id="rb_showposts_0" tabindex="1" checked="checked" /> Threads</label></li>
+			<li><label for="rb_showposts_1"><input type="radio" name="showposts" value="1" id="rb_showposts_1" tabindex="1"  /> Posts</label></li>
+			</ul>
+		</div>
+		
+		
+	<div class="blockrow">
+		<label for="humanverify">Random Question:</label>
+		<div class="rightcol">
+			<p class="description">Looking at the navigation above the form, you see a number of links. The first is New Posts. What letter comes after  F and A in FA_?</p>
+			<input type="text" class="primary textbox" name="humanverify[input]" id="humanverify" tabindex="1" />
+			<input id="hash" type="hidden" name="humanverify[hash]" value="2b8fa5c5519f02d9c6877c9dd8a6aa3f" />		
+		</div>
+	</div>
+
+	</div>
+
+	<div class="blockfoot actionbuttons">
+		
+		<div class="group">
+			<input type="submit" class="button" name="dosearch" value="Search Now" tabindex="1" accesskey="s"/>
+			<input type="reset" class="button" value="Reset" tabindex="1" accesskey="r" />
+		</div>
+	</div>
+
+	<input type="hidden" name="searchthreadid" value="" />
+
+	<input type="hidden" name="s" value="" />
+	<input type="hidden" name="securitytoken" value="guest" />
+	<input type="hidden" name="searchfromtype" value="vBForum:Post" />
+	<input type="hidden" name="do" value="process" />
+	<input type="hidden" name="contenttypeid" value="1" />
+</form>

@@ -1,0 +1,69 @@
+##################################################
+# https://help.github.com/articles/dealing-with-line-endings/
+
+
+##################################################
+# Set default behaviour, in case users don't have core.autocrlf set.
+* text=auto
+
+
+##################################################
+# Declare files that will always have CRLF line endings on checkout.
+*.ini eol=crlf
+*.INI eol=crlf
+*.bat eol=crlf
+*.BAT eol=crlf
+*.url eol=crlf
+*.URL eol=crlf
+
+*.vbp eol=crlf
+*.VBP eol=crlf
+*.vbg eol=crlf
+*.VBG eol=crlf
+*.vbw eol=crlf
+*.csi eol=crlf
+
+*.frm eol=crlf
+*.FRM eol=crlf
+*.bas eol=crlf
+*.BAS eol=crlf
+*.cls eol=crlf
+*.CLS eol=crlf
+*.ctl eol=crlf
+*.CTL eol=crlf
+
+*.nfo -text -diff
+*.NFO -text -diff
+*.log -text -diff
+*.LOG -text -diff
+*.txt -text -diff
+*.TXT -text -diff
+*.*htm* -text -diff
+*.*HTM* -text -diff
+
+##################################################
+# Denote all files that are truly binary and should not be modified.
+*.frx binary
+*.ctx binary
+*.res binary
+*.RES binary
+
+*.png binary
+*.PNG binary
+*.jpg binary
+*.JPG binary
+*.ico binary
+*.ICO binary
+*.psd binary
+*.PSD binary
+
+*.tlb binary
+*.TLB binary
+*.lib binary
+*.LIB binary
+*.dll binary
+*.DLL binary
+*.exe binary
+*.EXE binary
+*.bak binary
+*.BAK binary

@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>UniBot - A Complete Walkthrough</title>
+</head>
+
+<body>
+    Don't know how else to start, so I'll start with FAQ about this tool:<br>
+    <br>
+    <strong>What is UniBot?</strong><br>
+    - UniBot is an unique program that is used for quick and easy creation of online bots, without knowledge of any programming language and without any torment from designing GUI. It can be found <a href="http://mikisoft.me/programs/unibot" target="_blank">here</a>.<br>
+    <br>
+    <strong>For what is it actually used?</strong><br>
+    - You can create whatever thing comes to your mind, but most of it are some simple bots on which you will substantially lose time creating it in some IDE.<br>
+    <br>
+    <strong>Does that mean I can create any type of bot?</strong><br>
+    - Yes, if you are skilled enough. You can create for example bots for voting or commenting, or you can make some bot that will rip out specific content from pages on some site, etc.<br>
+    <br>
+    <strong>I have opened the program and nothing seems to be clear to me.</strong><br>
+    - That's why I decided to make this tutorial because interface of the program looks complicated, but once you begin to understand everything that I have presented in the following, it should be much clearer (at least I hope so).<br>
+    <br>
+    So, let's start...<br>
+    <br>
+    <span style="font-size: 180%"><em><span style="color: #0000FF">--- User interface ---</span></em></span><br>
+    <br>
+    As you have seen if you've already downloaded and run the program, the interface may seem a little hard to understand, but don't be afraid. The following picture should cover most of the things that you'll need to know:<br>
+    <br>
+    <img alt="Image" src="http://i.imgur.com/CGmOKGX.png"><br>
+    <br>
+    <strong><span style="text-decoration: underline">index</span></strong> - each index contains of one HTTP request (<em>GET</em> or <em>POST</em>) or solving logical statements (<em>If-Then</em>)<br>
+    <strong><span style="text-decoration: underline">strings</span></strong> - that is data which is gathered before or after the execution of the request, depending on where the string is actually used (on this topic I'll write most because it's very important to know)<br>
+    <strong><span style="text-decoration: underline">If clauses</span></strong> - a place to test strings if they meet certain conditions, and on that basis to decide what next to do (ie. which is next index or to stop the execution of the process)<br>
+    <strong><span style="text-decoration: underline">results</span></strong> - a place where the string results are shown (if that is enabled in their options)<br>
+    <br>
+    <span style="font-size: 180%"><em><span style="color: #0000FF">--- Indexes ---</span></em></span><br>
+    <br>
+    Like I said, indexes must contain <strong>at least one</strong> request or logical statement for solving. We'll focus on the first.<br>
+    As you know, the definition of each Internet bot is to assemble and send a specific HTTP requests, in order to achieve a specific goal. So in this program there are indexes, that present a separate templates of certain requests by which program is headed. As can be seen, each index can have a name for easier orientation.<br>
+    To complete the formation of an HTTP request, there are two important items: <em>POST</em> data and additional headers, which are starting to appear mostly from the second request by gathering the results of the strings. Don't be confused because I only mention HTTP requests - <strong>HTTPS</strong> is supported, too.<br>
+    <br>
+    <span style="font-size: 180%"><em><span style="color: #0000FF">--- Strings ---</span></em></span><br>
+    <br>
+    This is the key point of the program, so you should pay special attention in order to learn to make bots after finishing this.<br>
+    <br>
+    We'll begin with the facts:<br>
+    <em>- strings usually occur after execution of the first request<br>
+	- each string should contain at least one command<br>
+	- command that determines what will be the result must be valid and in accordance with the request that was previously sent<br>
+	- most of the strings are essential for the continuation of the process<br>
+	- they're executed depending on where they are used - <strong>before</strong> or <strong>after</strong> sending request<br>
+	- their usage is <strong>%name%</strong> (where "name" is the name of the string)<br>
+	- the string will not be executed if it isn't public and if there is no place in the index where it is used</em><br>
+    <br>
+    If you understand this then we go into analysis of a string that contains one command: <code>'Hey!'+rpl('Hello, world!','world','Miki')</code><br>
+    Now let's analyze its parts:<br>
+    <br>
+    <em>'Hey!'</em> - everything that is under <strong>normal apostrophe</strong> represents a constant, and this constant is located at the beginning of the string so that will be the first thing printed into it<br>
+    <br>
+    + - character for merging command with constant, or with another command<br>
+    <br>
+    <em>rpl('Hello, world!','world','Miki')</em> - it can be assumed that this is the command for replacing specific text, so in this case in the text "Hello, world!" it replaces the "world" with "Miki"<br>
+    <br>
+    The overall result would be: <code>Hey!Hello, Miki!</code>
+    <br>
+    These are actually some of the most basic things you need to know if you want to go into the world of programming, but I wouldn't call this real programming because you must know a lot more than working with strings. Anyway, moving on...<br>
+    <br>
+    If you haven't heard of <strong><a href="http://regular-expressions.info" target="_blank">regular expressions</a></strong>, then you should first look at them because they are very important for the formation of the string result. I will not talk about that, because you have a lot of examples and explanations all over the Internet.<br>
+    The basic command for executing them (which looks like previous) is as follows: <code>rg(source,regex,replacement)<br></code><br>
+    Example: <code>rg('Hey!Hello, Miki!',', (.*?)!','$1')</code><br>
+    Result: <code>Miki</code><br>
+    <br>
+    <em><span style="color: #CC3399">Independent commands:</span></em><br>
+    These are commands that are processed even if they're located in the constants ie. under apostrophes.<br>
+    <br>
+    <em>First and most important command is:</em> <strong>[src]</strong><br>
+    In its place there will be a complete page source (after completing request of course), with response headers at the beginning.<br>
+    <br>
+    <em>Second important command is:</em> <strong>[nl]</strong><br>
+    Considering that the commands and the constants are written only in one line, I had to find a way to print the constants in multiple lines, so in place of this command a new line separator will be printed.<br>
+    <br>
+    <em>Third:</em> <strong>[rnd]</strong><br>
+	In its place will be put random generated characters (upper and/or lower case letters, numbers and symbols), or a number from a given range.<br>
+	To determine the range of characters that will be included, between the last letter and ] you have to add some of these letters:<br>
+	U - since the default setting is to include only lowercase letters, this command specifies that only <em>uppercase</em> letters are considered<br>
+	M - <em>mixed-case</em>: mixed uppercase and lowercase letters<br>
+	L - includes only <em>letters</em><br>
+	D - includes only <em>numbers</em><br>
+	S - includes only <em>symbols</em><br>
+	The last three letters that define a range of characters can be combined, so we have the following example to generate random email addresses: <code>'[rnd<span style="color: #FF0000">LD</span>]@gmail.com'</code><br>
+    Result would be: <code>6g4fog9bdl1fajn@gmail.com<br></code><br>
+    As you can see, there is a default number of characters to be printed, and it's 15. To change this, again at the end we add number of characters that we want to be printed: <code>'[rndLD<span style="color: #FF0000">8</span>]@gmail.com'</code><br>
+    Result: <code>q6pxd1hp@gmail.com</code><br>
+    As I mentioned above, there is another thing about this command - and that is to generate a random number from the specified range. Its usage is very simple: <code>'[rnd5-10]'</code><br>
+    Obviously, this will generate some number between 5 and 10.<br>
+    <br>
+    <em>Fourth:</em> <strong>[inp]</strong><br>
+	In the place of this command will be the user input, which usage is equivalent to the command above (except the U and M letters that are unnecessary in this case), so I will not say anything more about this.<br>
+    <br>
+    <em><span style="color: #CC3399">String options:</span></em><br>
+    After defining the string, the button next to it ("...") will be enabled which represent the options for that string. Click on it to get the following little window, where we choose which options will be used:<br>
+    <img alt="Image" src="http://i.imgur.com/wQuf3Ao.png"><br>
+    <strong><span style="text-decoration: underline">Crucial</span></strong> - it is important for the continuation of the process<br>
+    <strong><span style="text-decoration: underline">Public</span></strong> - it is available in the other indexes for modification and usage<br>
+    <strong><span style="text-decoration: underline">Array</span></strong> - after processing the string, if more than one result occurs (when using <em>regex</em> or <em>input</em>), this option applies the template to each of them separately (by making <em>sub-threads</em>), but if the option is disabled then only the first result is used<br>
+    <strong><span style="text-decoration: underline">Output</span></strong> - this is the option that will show the string results in the main window<br>
+    <br>
+    <span style="font-size: 180%"><em><span style="color: #0000FF">--- If clauses ---</span></em></span><br>
+    <br>
+	The next are If clauses, which of course are not required if there is an HTTP request in a given index. If both are included, then the request will be executed first with all the strings that are with it, and then the If clauses with its strings. (After that the public strings that haven't been put in the HTTP request nor the If clauses will be executed.)<br>
+	It is a simple principle of making them, so everyone could understand it without explanation (even better if he knows the mathematical logic, ie. the basics of programming). What I will mention is the operation depending on the results of an entire If clause, which will of course be one of the two possible outcomes - in the case where the If clause is true and the case where it is false. In the both cases, the options are the same.<br>
+	We see on the right side option "Change proxy" - if the seconds to wait are not defined, it changes current to the next proxy address before proceeding to the next index ("Go to") or finishing process ("Finish"). If there is no available proxy address and the seconds are defined, then the process will not be stopped because seconds to wait will be chosen as alternative.<br>
+    <br>
+    And that's it.<br>
+    <br>
+    <span style="font-size: 180%"><em><span style="color: #0000FF">--- Additional stuff ---</span></em></span><br>
+    <br>
+    <em><span style="color: #CC3399">Removing indexes:</span></em><br>
+    You don't have to manually modify configuration file to delete indexes, instead of that do this:<br>
+    1. If a given index contains only a request, then delete the URL field and you will be asked whether you want to delete the entire index.<br>
+    2. If a given index contains only an If clause, then delete it. If it contains more than one, in the very first field type <strong>[clear]</strong> and hit Enter.<br>
+    3. If a given index contains both, then use ways from above to delete them.<br>
+    <br>
+    <em><span style="color: #CC3399">Proxy and thread settings:</span></em><br>
+    <img alt="Image" src="http://i.imgur.com/AKfYTVn.png"><br>
+    <span style="text-decoration: underline">Same proxy for each thread</span> - every thread will act independently with a proxy list<br>
+    <span style="text-decoration: underline">Do not retry with another proxy</span> - do not retry request if proxy is bad<br>
+    <br>
+    <em><span style="color: #CC3399">Other (dependent) string commands:</span></em><br>
+    u(text) - converts the text to <em>uppercase</em><br>
+    l(text) - converts the text to <em>lowercase</em><br>
+    b64(text) - encrypts the text with <em>Base64</em><br>
+    md5(text) - encrypts the text with <em>MD5</em><br>
+    &lt;file&gt; - loads the given file as text (by positioning to the folder where is the program itself)<br>
+    <br>
+    <em><span style="color: #CC3399">multipart/form-data POST requests with files:</span></em>
+    <br>=================<br>
+    <code><pre>
+    POST /?action=analyze HTTP/1.1
+    Host: samplesite.org
+    Content-Type: multipart/form-data; boundary=-----------------------------280841152422961
+    Content-Length: 6818
+    -----------------------------280841152422961
+    Content-Disposition: form-data; name="DataType"
+    
+    file
+    -----------------------------280841152422961
+    Content-Disposition: form-data; name="ImageFile"; filename="picture.jpg"
+    Content-Type: image/jpeg
+    
+    ÿØÿà(...)</pre></code>
+    =================<br>
+    For the request above, we type this into the Post field: <code>['DataType':'file';'ImageFile':&lt;picture.jpg&gt;]</code><br>
+    <br>
+    <em><span style="color: #CC3399">String builder:</span></em><br>
+    <img alt="Image" src="http://i.imgur.com/S3XxGTD.png"><br>
+    In the field for entering string commands, (if it's not blank then before everything) type <strong>[build]</strong> and hit Enter.<br>
+    <br>
+    <span style="font-size: 180%"><em><span style="color: #0000FF">--- The finish ---</span></em></span><br>
+    <br>
+    That's all? Well, it's not! I didn't talk about some less important things which will only additionally "overload" this tutorial, so you have to explore it by yourself if you are really interested. Maybe you'll find something unexpected... <img alt=":)" src="https://www.ljuska.org/images/smilies/icon_e_smile.gif" title="Smile">
+</body>
+</html>

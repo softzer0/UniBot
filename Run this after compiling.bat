@@ -1,0 +1,1 @@
+ResHacker.exe -script rhscript.ini

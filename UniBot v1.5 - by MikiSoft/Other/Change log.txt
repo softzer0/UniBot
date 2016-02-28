@@ -1,0 +1,31 @@
+v1.0:
+* First released version; option "Make silent bot" isn't yet enabled
+
+v1.1:
+* Option "Make silent bot" isn't yet enabled
++ Added new feature - plugins! There are two currently: Math and Simple Captcha with source (VB6)
++ Added new command: enc(text) - uses URL encode on given text
+- Fixed some major and minor bugs
+- [About week later: v1.1f] Fixed many important bugs (arrays work now)
+
+v1.2:
+* Option "Make EXE bot" isn't yet enabled
++ Added more options for retry
++ Added two independent commands: [oind] - previous array index, and [aind] - current array index
++ Added .NET 3.5 RegEx (special) plugin
++ 7 random configurations are included in the package
+- Fixed a lot of major bugs (many of them were for arrays), changed some minor rules
+
+v1.3:
++ Option "Make EXE bot" finally enabled - you can now build stand-alone bots (even with plugins included)!
++ Added two independent commands: [dt] - current date & time, and [thr] - current thread
++ Added 2 new configurations - for FeelingSurf and 10KHits
+* Inserting and removing indexes is now easier (Alt+I, Alt+R)
+- Fixed many important bugs
+
+v1.4:
++ Added "Fine tuning" dialog; running bot for a specific and long time is now possible!
++ Added one new command: dec(text) - uses URL decode on given text
++ Added 4 new configurations, for: 247AutoHits, WebSurf, Twistrix and Alexa Master
++ Added GSA Captcha Breaker plugin with source
+- Fixed some bugs

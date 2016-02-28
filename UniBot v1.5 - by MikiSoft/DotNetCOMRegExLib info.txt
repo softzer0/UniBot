@@ -1,0 +1,2 @@
+This is a special plugin for regular expressions, which requires .NET Framework 3.5 to be installed on the system.
+Do not rename it or move to another directory - it will only work if it's located (with its full and case-insensitive name) in the same directory where is the program!

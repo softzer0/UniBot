@@ -1,0 +1,136 @@
+Ne znam kako drugačije da počnem, pa ću početi sa često postavljenim pitanjima u vezi ove alatke:
+
+[b]Šta je UniBot?[/b]
+- UniBot je jedinstven program koji služi za laku i brzu izradu onlajn botova, bez znanja nekog programskog jezika i bez ikakvih muka oko dizajniranja korisničkog interfejsa. Program možete naći ovde: https://ljuska.org/viewtopic.php?f=99&t=18199
+
+[b]Za šta se konkretno koristi?[/b]
+- Možete da napravite sve što vam padne na pamet, ali su to uglavnom neki jednostavniji botovi za koje se ne bi latili rada u nekom programerskom alatu (IDEu).
+
+[b]Da li to znači da mogu napraviti bilo koju vrstu bota?[/b]
+- Da, ako ste dovoljno spretni. Mogu se napraviti, recimo botovi za glasanje ili komentarisanje, ili pak za vađenje određene sadržine stranica sa željenog sajta, itd.
+
+[b]Otvorio sam program i ništa mi nije jasno.[/b]
+- Zato sam i krenuo da pravim ovo uputstvo, jer interfejs programa izgleda komplikovano ali jednom kada se shvati sve ovo što ću spomenuti u narednom tekstu, izgledaće puno jasnije (bar se nadam da nije toliko teško za kapiranje).
+
+Pa, krećemo...
+
+[size=180][i][color=#00BFFF]--- Korisnički interfejs ---[/color][/i][/size]
+
+Kao što ste videli ako ste već skinuli i pokrenuli program, interfejs možda izgleda malo nerazumljivo, ali ne treba da se plašite. Sledeća slika bi trebalo da obuhvati većinu stvari koje će vam biti potrebne:
+
+[img]http://i.imgur.com/kw9KgDn.png[/img]
+
+[b][u]indeks[/u][/b] - svaki indeks sadrži jedan HTTP zahtev ([i]GET[/i] ili [i]POST[/i]) ili rešavanje logičkih iskaza ([i]If-Then[/i])
+[b][u]promenljive[/u][/b] - tu su zapravo smešteni podaci koji se vade pre ili nakon izvršenja zahteva, u zavisnosti od toga gde se tačno upotrebljavaju (na ovo ću se posebno zadržati kasnije pošto je veoma bitno da se zna)
+[b][u]If klauzule[/u][/b] - mesto za testiranje promenljivih da li ispunjavaju određene uslove, i na osnovu toga se odlučuje šta dalje raditi (odnosno na koji sledeći indeks ići ili pak zaustaviti izvršavanje procesa)
+[b][u]rezultati[/u][/b] - prostor gde se prikazuju rezultati promenljivih (ako je to precizirano u njihovim opcijama)
+
+[size=180][i][color=#00BFFF]--- Indeksi ---[/color][/i][/size]
+
+Kao što sam rekao, indeksi trebaju sadržati [b]barem jedan[/b] zahtev ili logički iskaz za rešavanje. Fokusiraćemo se na ovo prvo.
+Kao što znate, definicija svakog Internet bota je pravljenje i slanje određenih HTTP zahteva, kako bi se postigao neki određeni cilj. Zato u ovom programu postoje indeksi, to jest zasebni šabloni određenih zahteva po kojima se program upravlja. Kao što se vidi, svaki indeks može sadržati i naziv radi lakše orijentacije.
+Za kompletno formiranje HTTP zahteva, tu su još dve bitne stavke: [i]POST[/i] podaci i dodatni [i]headeri[/i] koji se uglavnom od drugog zahteva formiraju na osnovu promenljivih. Nemojte da vas buni to što spominjem samo HTTP zahteve - podržani su i [b]HTTPS[/b] zahtevi.
+
+[size=180][i][color=#00BFFF]--- Promenljive ---[/color][/i][/size]
+
+Ovo je ključna stavka programa, tako da bi trebalo da obratite posebnu pažnju da bi na kraju naučili da pravite botove.
+
+Krenućemo od činjenica:
+[i]- promenljive se obično javljaju nakon izvršenja prvog zahteva
+- svaka promenljiva treba da sadrži barem jednu komandu
+- komanda koja određuje to kakav će rezultat biti mora da bude validna i u skladu sa zahtevom koji je pre toga poslat
+- većina promenljiva je bitna za dalje funkcionisanje procesa
+- izvršavaju se u zavisnosti od toga gde su upotrebljene - [b]pre[/b] ili [b]posle[/b] slanja zahteva
+- upotrebljavaju se tako što se upiše [b]%ime%[/b] (gde je "ime" naziv za promenljivu) na mestu gde je to predviđeno
+- promenljive se neće izvršiti ako nisu javne (Public) i pritom ako ne postoji mesto u indeksu gde su upotrebljene[/i]
+
+Ako ste ovo shvatili onda idemo dalje - u analizu date promenljive koja u sebi sadrži jednu komandu: [code]'Hej!'+rpl('Dobar dan, svete!','svete','Miki')[/code] Sada ćemo je rasčlaniti na njene delove:
+
+[i]'Hej!'[/i] - sve što je pod [b]običnim apostrofom[/b] predstavlja konstantu, a pošto se nalazi na početku ovo će se prvo ispisati u promenljivoj
+
++ - znak za spajanje komandi sa konstantom, ili nekom drugom komandom
+
+[i]rpl('Dobar dan, svete!','svete','Miki')[/i] - može se pretpostaviti da je ovo komanda za zamenu određenog teksta, tako da će se u ovom primeru u tekstu "Dobar dan, svete!" zameniti "svete" sa "Miki"
+
+Sveukupan rezultat bi bio: [quote]Hej!Dobar dan, Miki![/quote] Ovo su zapravo neke najosnovnije stavke koje treba da znate ako bi se upuštali u svet programiranja, ali ja ovo ne bih nazvao pravim programiranjem jer za to bi trebalo da znate puno više od rada sa promenljivama. Kako god, idemo dalje...
+
+Ako niste čuli za [b][url=http://regular-expressions.info]regular expressions[/url][/b], onda bi trebalo da ih prvo proučite pošto su veoma bitne za formiranje rezultata promenljivih. O tome neću dalje pričati ovde, zato što imate na Internetu dosta primera i pojašnjenja.
+Osnovna komanda za njihovo pokretanje (koja liči na prethodnu) je sledeća: [code]rg(izvor,regex,zamena)[/code] Primer: [code]rg('Hej!Dobar dan, Miki!',', (.*?)!','$1')[/code] Rezultat: [quote]Miki[/quote]
+[i][color=#80BF40]Nezavisne komande:[/color][/i]
+Ovo su komande koje se procesiraju čak i kad su u konstantama tj. pod apostrofima.
+
+[i]Prva i najbitnija komanda je:[/i] [b][src][/b]
+Na njenom mestu će se naći kompletan izvor ([i]source[/i]) stranice (nakon odrađenog zahteva podrazumeva se), zajedno sa [i]response headersima[/i] na početku.
+
+[i]Druga bitna komanda je:[/i] [b][nl][/b]
+S' obzirom da se komande pišu samo u jednom redu, morao je da se nađe način kako ispisati konstante u više redova, tako da na mestu ove komande će se napraviti novi red (u konstanti u kojoj se bude nalazila).
+
+[i]Treća:[/i] [b][rnd][/b]
+Na njenom mestu će se naći različito ([i]random[/i]) generisani znakovi (velika ili/i mala slova, brojevi i simboli) ili pak jedan broj iz datog opsega.
+Za određivanje raspona znakova koji će se uključiti u niz, između zadnjeg slova i ] se dodaje neki od ovih slova:
+U - [i]upper-case[/i]: pošto je podrazumevano podešavanje da se uključuju samo mala slova, ova komanda zadaje da samo velika slova dolaze u obzir
+M - [i]mixed-case[/i]: mešana velika i mala slova
+L - [i]letters[/i]: uključuje samo slova
+D - [i]digits[/i]: uključuje samo brojeve
+S - [i]symbols[/i]: uključuje samo simbole
+Ova zadnja tri slova koja određuju raspon znakova se mogu kombinovati, tako da imamo sledeći primer za generisanje mejl adrese: [quote]'[rnd[color=#FF0000]LD[/color]]@gmail.com'[/quote] Rezultat bi bio: [quote]6g4fog9bdl1fajn@gmail.com[/quote] Kao što vidite, postoji podrazumevani broj znakova koji će se ispisati i to je 15. Za promenu toga, opet na kraju dodajemo broj znakova koji hoćemo da ima u nizu: [quote]'[rndLD[color=#FF0000]8[/color]]@gmail.com'[/quote] Rezultat: [quote]q6pxd1hp@gmail.com[/quote] Kao što spomenuh iznad, postoji još jedna stvar u vezi ove komande - a to je generisanje različitog broja iz određenog opsega. Veoma se jednostavno poziva: [code]'[rnd5-10]'[/code] Logično, ovo će izbaciti neki broj između 5 i 10.
+
+[i]Četvrta:[/i] [b][inp][/b]
+Na mestu ove komande će se naći korisnički unos ([i]input[/i]), koji se istovetno može limitirati kao komanda iznad (osim U i M slova koji su u ovom slučaju nepotrebni), tako da na ovoj komandi neću više trošiti reči.
+
+[i][color=#80BF40]Opcije promenljivih:[/color][/i]
+Nakon definisanja promenljive, omogućiće se dugme ("...") pored nje koje predstavlja opcije za tu promenljivu. Klikom na njega dobijamo sledeći prozorčić, preko koga biramo koje će opcije biti uključene:
+[img]http://i.imgur.com/wQuf3Ao.png[/img]
+[b][u]Crucial[/u][/b] - promenljiva bez koje se ne može ići dalje
+[b][u]Public[/u][/b] - promenljiva je dostupna i u ostalim indeksima za korišćenje i modifikovanje
+[b][u]Array[/u][/b] - nakon procesiranja promenljive pojaviće se više od jednog rezultata (u slučaju kada se koristi [i]regex[/i] ili [i]input[/i]), i ovom opcijom se primenjuje šablon na svaki od njih zasebno (pravljenjem [i]sub-threadova[/i])
+[b][u]Output[/u][/b] - ovo je ono podešavanje koje će rezultate promenljive učiniti vidljivim korisniku u glavnom prozoru
+
+[size=180][i][color=#00BFFF]--- If klauzule ---[/color][/i][/size]
+
+Sledeće su If klauzule, koje naravno nisu obavezne ukoliko postoji HTTP zahtev u datom indeksu. Ukoliko postoji, onda se prvo izvršava zahtev i sve promenljive koje su date u njemu, pa onda If klauzula sa svojim promenljivama. (Tek nakon svega toga se izvršavaju javne promenljive koje nisu bile definisane ni u HTTP zahtevu ni u If klauzuli.)
+Veoma je jednostavan princip njihovog pravljenja, tako da bi svako mogao sam da shvati kako funkcionišu (još bolje ako zna matematičku logiku tj. osnove programiranja). Ono što ću spomenuti je delovanje u zavisnosti od rezultata jedne celokupne If klauzule, gde će naravno biti jedan od dva moguća ishoda - u slučaju da je If klauzula tačna ili ne. U oba slučaja su opcije iste.
+Uočavamo sa strane opciju "Change proxy" - ona služi da promeni na sledeću proksi adresu, ukoliko nisu definisane sekunde čekanja ("Wait") pre prelaženja na sledeći indeks ("Go to") ili završavanja procesa ("Finish"). Ako nestane raspoloživih proksi adresa a sekunde čekanja su definisane, onda se proces neće prekidati već ce preći na čekanje kao alternativu.
+
+I to je to.
+
+[size=180][i][color=#00BFFF]--- Dodatne stvarčice ---[/color][/i][/size]
+
+[i][color=#80BF40]Brisanje indeksa:[/color][/i]
+Ne morate ručno modifikacijom konfiguracijskog fajla brisati indekse, možete i ovako:
+1. Ako dati indeks sadrži samo zahtev, onda obrišite URL polje i dobićete pitanje da li želite da se obriše celokupan indeks.
+2. Ako dati indeks sadrži samo If klauzulu, obrišite pak nju. Ako sadrži više od jedne, u prvom polju otkucajte [b][clear][/b] i lupite Enter.
+3. Ako dati indeks sadrži i zahtev i If klauzulu/e, onda obrišite oba na ova dva načina iznad.
+
+[i][color=#80BF40]Podešavanja za proksi i threadove:[/color][/i]
+[img]http://i.imgur.com/AKfYTVn.png[/img]
+[u]Same proxy for each thread[/u] - svaki [i]thread[/i] se nezavisno ponaša sa listom proksi adresa
+[u]Do not retry with another proxy[/u] - ne ponavljaj zahtev kada bude loš proksi
+
+[i][color=#80BF40]Ostale (zavisne) komande za promenljive:[/color][/i]
+u(tekst) - [i]upper-case[/i]: pretvara tekst u velika slova
+l(tekst) - [i]lower-case[/i]: pretvara tekst u mala slova
+b64(tekst) - [i]Base64[/i]: kriptuje tekst Base64 enkripcijom
+md5(tekst) - kriptuje tekst MD5 enkripcijom
+<fajl> - otvara dati fajl kao tekst (pozicionirajući se na direktorijum gde se nalazi sam program)
+
+[i][color=#80BF40]multipart/form-data POST zahtevi sa fajlovima:[/color][/i] [code]POST /?action=analyze HTTP/1.1
+Host: samplesite.org
+Content-Type: multipart/form-data; boundary=-----------------------------280841152422961
+Content-Length: 6818
+-----------------------------280841152422961
+Content-Disposition: form-data; name="DataType"
+
+file
+-----------------------------280841152422961
+Content-Disposition: form-data; name="ImageFile"; filename="slika.jpg"
+Content-Type: image/jpeg
+
+ÿØÿà(...)[/code] Za ovaj zahtev iznad, ovo unosimo u [i]Post[/i] polju: [code]['DataType':'file';'ImageFile':<slika.jpg>][/code] 
+[i][color=#80BF40]Konstruktor promenljivih:[/color][/i]
+[img]http://i.imgur.com/S3XxGTD.png[/img]
+U polju za unos komandi promenljivih unesite (ako nije prazno onda ispred svega) [b][build][/b] i lupite Enter.
+
+[size=180][i][color=#00BFFF]--- Kraj ---[/color][/i][/size]
+
+To je sve? E, pa nije! Namerno nisam govorio o još nekim manje bitnijim stvarima koje bi samo ovo uputstvo dodatno "natrpale", tako da se bacite na istraživanje ako vas toliko interesuje. Možda naiđete na nešto neočekivano... :)

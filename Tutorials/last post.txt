@@ -1,0 +1,11 @@
+[img]http://i.imgur.com/8WHNAlR.png[/img]
+
+People wanted to run a bot 24/7, but with earlier versions that wasn't possible due to cumulative memory consumption. Well, not anymore - with this new settings you can customize execution even more!
+
+Change log ([b]v1.4[/b]): [quote]+ Added "[b]Fine tuning[/b]" dialog; running bot for a [b]specific and long[/b] time is now possible!
++ Added one new command: [b]dec(text)[/b] - uses URL decode on given text
++ Added [b]4[/b] new configurations, for: [url=http://247autohits.com][b]247AutoHits[/b][/url], [url=http://websurf.cz][b]WebSurf[/b][/url], [url=http://twistrix.com][b]Twistrix[/b][/url] and [b][url=http://alexamaster.com]Alexa Master[/url][/b]
++ Added [b]GSA Captcha Breaker[/b] plugin with source
+- Fixed some bugs[/quote]
+
+[b]Find[/b] the latest version here: http://unibot.boards.net

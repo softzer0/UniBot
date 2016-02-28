@@ -1,0 +1,156 @@
+<form action="http://www.codingforums.com/search.php?do=process" method="post" name="vbform" id="searchform">
+<ul id="searchtypeswitcher" class="floatcontainer">
+	<li><a rel="nofollow" href="search.php?search_type=1">Search Single Content Type</a></li>
+	<li class="selected"><a href="search.php">Search Multiple Content Types</a></li>
+</ul>
+
+<div class="blockbody formcontrols">
+	
+	<h3 class="blocksubhead">Search In</h3>
+	<div class="section">
+		<div class="blockrow">
+			<label>Search Types:</label>
+			<ul id="searchtypelist" class="checkradio floatcontainer rightcol">
+				<li>
+					<label><input type="checkbox" name="type[]" value="" id="searchtype_all" /> All Types</label>
+				<!-- </li>
+				
+					<li>
+						<label><input type="checkbox" name="type[]" value="3" class="searchtype" /> Forums</label>
+					</li>
+				
+					<li>
+						<label><input type="checkbox" name="type[]" value="1" class="searchtype" /> Posts</label>
+					</li>
+				
+					<li>
+						<label><input type="checkbox" name="type[]" value="7" class="searchtype" /> Groups</label>
+					</li>
+				
+					<li>
+						<label><input type="checkbox" name="type[]" value="5" class="searchtype" /> Group Messages</label>
+					</li>
+				!-->
+			</ul>
+		</div>
+	</div>
+	<h3 class="blocksubhead">Search For</h3>
+	<div class="section">
+		<div class="blockrow">
+			<label for="keyword">Keyword(s):</label>
+			<ul class="multifield group">
+				<li>
+					<input id="keyword" type="text" class="textbox" name="query" tabindex="1" value="" />
+				</li>
+				<li>
+					<select name="titleonly" tabindex="1">
+						<option value="0" selected="selected">Search Entire Posts</option>
+						<option value="1" >Search Titles Only</option>
+					</select>
+				</li>
+			</ul>
+		</div>
+		<div class="blockrow">
+			<label for="searchuser">User Name:</label>
+			<ul class="multifield group">
+				<li>
+					<div id="userfield" class="popupmenu nomouseover noclick nohovermenu">
+						<input type="text" class="textbox popupctrl" name="searchuser" id="userfield_txt" tabindex="1" value="" />
+					</div>
+					<script type="text/javascript">
+						snc = new vB_AJAX_NameSuggest('snc', 'userfield_txt', 'userfield');
+					</script>
+				</li>
+				<li>
+					<label for="cb_exactname">
+						<input type="checkbox" name="exactname" value="1" id="cb_exactname" tabindex="1" checked="checked" />&nbsp;Exact name
+					</label>
+				</li>
+			</ul>
+		</div>
+		
+			
+		<div class="blockrow">
+			<label for="tag">Tag:</label>
+			<div id="tag_add" class="popupmenu nomouseover noclick nohovermenu">
+				<input type="text" class="textbox primary popupctrl" name="tag" id="tag_add_input" tabindex="1" value="" />
+			</div>
+			<script type="text/javascript">
+				tag_add_comp = new vB_AJAX_TagSuggest('tag_add_comp', 'tag_add_input', 'tag_add');
+			</script>
+		</div>
+			
+		
+		
+	</div>
+	<div class="blockfoot actionbuttons">
+		<div class="group">
+			<input type="submit" class="button" name="dosearch" value="Search Now" tabindex="1" accesskey="s"/>
+			<input type="reset" class="button" value="Reset" tabindex="1" accesskey="r" />
+		</div>
+	</div>
+	<h3 class="blocksubhead">Additional Options <a class="collapse" id="collapse_additionaloptions" href="search.php#top"><img src="images/styles/Modern/buttons/collapse_40b.png" alt="" /></a></h3>
+	<div class="section" id="additionaloptions">
+		<div class="blockrow">
+		<label for="searchdate">Find Posts</label>
+			<ul class="multifield group">
+				<li>
+					<select name="searchdate" tabindex="1">
+						<option value="0" selected="selected">Any Date</option>
+						<option value="lastvisit" >Your Last Visit</option>
+						<option value="1" >Yesterday</option>
+						<option value="7" >A Week Ago</option>
+						<option value="14" >2 Weeks Ago</option>
+						<option value="30" >A Month Ago</option>
+						<option value="90" >3 Months Ago</option>
+						<option value="180" >6 Months Ago</option>
+						<option value="365" >A Year Ago</option>
+					</select>
+				</li>
+				<li>
+					<select name="beforeafter" tabindex="1">
+						<option value="after" >and Newer</option>
+						<option value="before" >and Older</option>
+					</select>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="blockrow">
+			<label for="sortby">Sort Results by</label>
+			<ul class="multifield group">
+				<li>
+					<select name="sortby" tabindex="1">
+						<option value="title" >Title</option>
+						<option value="dateline" selected="selected" >Date</option>
+						<option value="user" >User Name</option>
+					<option value="relevance" selected="selected">Relevance</option>
+					</select>
+				</li>
+				<li>
+					<select name="order" tabindex="1">
+						<option value="descending" selected="selected">in Descending Order</option>
+						<option value="ascending" >in Ascending Order</option>
+					</select>
+				</li>
+			</ul>
+		</div>
+		
+		<div class="blockrow"><input type=hidden value='1' id='humanverify' name='humanverify' /><div class="group"><div id='funcaptcha-wrapper'><li><div id='FunCaptcha'></div><input type='hidden' id='FunCaptcha-Token' name='fc-token' value='511567f41461414d0.52617907|r=us-east-1|guitextcolor=%2377A029|metabgclr=%23FFFFFF|metaiconclr=%2377A029|meta=1|meta=3|pk=58C48790-A2B5-62E1-8E20-71D5943E838D|surl=https://funcaptcha.co'><script src='https://funcaptcha.co/fc/fc-m.js?cache=1451180354' type='text/javascript' language='JavaScript'></script><noscript><p>Please enable JavaScript to continue.</p></noscript></li></div></div></div>
+	</div>
+		
+	<div class="blockfoot actionbuttons">
+	
+		<div class="group">
+			<input type="submit" class="button" name="dosearch" value="Search Now" tabindex="1" accesskey="s"/>
+			<input type="reset" class="button" value="Reset" tabindex="1" accesskey="r" />
+		</div>
+	</div>
+</div>
+
+<input type="hidden" name="s" value="" />
+<input type="hidden" name="securitytoken" value="guest" />
+<input type="hidden" name="do" value="process" />
+<input type="hidden" name="searchthreadid" value="" />
+
+</form>

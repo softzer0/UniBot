@@ -1,0 +1,100 @@
+Here is a tutorial for making a functional configuration:
+
+Note: You'll need Google Chrome or Mozilla Firefox browser.
+
+Let's say we want to make a bot that will give a vote here (choose another since this is closed):
+http://visualstudio.uservoice.com/forums/121579/suggestions/7462243
+
+First of all, we open UniBot and paste that URL into the first index:
+[img]http://i.imgur.com/QsX3E3G.png[/img]
+
+Then we open the browser and go to incognito/private browsing mode to be sure that none of the cookies exist.
+After that, we open developer console (Ctrl+Shift+I), select Network tab and then navigate to the above URL.
+We'll see something like this:
+[img]http://i.imgur.com/G67Kwym.png[/img]
+
+Now, we go to the top of the list on the right where is developer window and select the first item. A new window will show below, so we select "Headers" tab and then focus on "Response Headers":
+[img]http://i.imgur.com/rzCl2zv.png[/img]
+
+For us the important thing will be "Set-Cookie" parameters, so we see that they're two unusual (ID cookies)[b][/b]:
+__cfduid
+_session_id
+
+The response headers are also part of the [b][src][/b], so we have to extract that two values from it using two [i]regex[/i] commands below: [code]rg('[src]','__cfduid=(.*?);')[/code] [code]rg('[src]','_session_id=(.*?);')[/code]
+
+We put these commands where they belong:
+[img]http://i.imgur.com/Nj2CESC.png[/img]
+
+Then we have to make these strings to be public, because we'll use them in another indexes. For the each of them, go to options ("...") and check "Public":
+[img]http://i.imgur.com/0o24E2z.png[/img]
+
+Now we'll focus on the browser window and clear the items in the list by clicking here:
+[img]http://i.imgur.com/dGuH13z.png[/img]
+
+After that, we should give a vote and catch that request. Click on the "Vote" button on the page and select a number of votes. We will now see this:
+[img]http://i.imgur.com/OCdCZlS.png[/img]
+
+You can see that the first item and after it another one in the list is a POST request. We click on the first and select again "Headers", but we now focus on the "Request Headers" and notice these things:
+[img]http://i.imgur.com/dhVTsWc.png[/img]
+
+There is some another parameter (CSRF token) that we haven't catched, and it must be in the page source if it wasn't in the very first response header from above. We open up the page source (Ctrl+U) and find its value:
+[img]http://i.imgur.com/CZlTAxG.png[/img]
+
+We have now a problem with forming a command to extract that value from source. It can't be like this: [code]rg('[src]','<meta content="(.*?)"','$1') [/code] Since there are two meta content tags, the result would be the first: [code]authenticity_token[/code] We solve this by pointing out to start from the second result. Since the results start from 0, then for the second result command will be: [quote]rg('[src]','<meta content="(.*?)"','$1'[color=#FF0000],1[/color])[/quote]
+
+We repeat the steps for making a public string from above, and we got now the current (but not final) look of the first index:
+[img]http://i.imgur.com/auZAKo8.png[/img]
+
+If you have done all of this, you can select the second index:
+[img]http://i.imgur.com/b1hGOzr.png[/img]
+
+We'll now back to the browser window and right click on the first item from the list, and select to copy link address:
+[img]http://i.imgur.com/0MzD1CD.png[/img]
+
+The URL is now copied into our clipboard. We paste it into the URL field in UniBot:
+[img]http://i.imgur.com/p7uKN4N.png[/img]
+
+Now, we back on the "Request Headers" in the browser below list, to look for the POST data that was sent:
+[img]http://i.imgur.com/lzwCdUT.png[/img]
+
+We'll form it like this for the Post field in UniBot and ignore "debug" parameters: [code]site2=1&forum_id=121579[/code] It will now look like this:
+[img]http://i.imgur.com/701pHJH.png[/img]
+
+Also, we must include as additional headers cookies (in strings "cfduid" and "sessionuid") that we have extracted earlier, and the CSRF token:
+[img]http://i.imgur.com/cOy2H2G.png[/img]
+
+Now we'll back on the browser. We will focus on the "Response Headers", to see yet another unusual cookies (ID and for authentication)[b][/b]:
+[img]http://i.imgur.com/V5Y0uMD.png[/img]
+
+Again, we repeat the previous steps for making public strings with these commands: [code]rg('[src]','_uservoice_uid=(.*?);')[/code] [code]rg('[src]','auth_token=(.*?);')[/code]
+
+And after you have done all of that, the second index finally should look like this:
+[img]http://i.imgur.com/00FJF9E.png[/img]
+
+Now, we click in the browser on the "votes.json" item in the list and focus on its "Request Headers". We'll see this:
+[img]http://i.imgur.com/C1d5uru.png[/img]
+
+Again, we find its content in page source:
+[img]http://i.imgur.com/CACR3f9.png[/img]
+
+We'll use this command to extract it: [code]rg('[src]','client_key: "(.*?)"','$1')[/code]
+
+We back to the first index and put that command into a new string, so it shoud look like this:
+[img]http://i.imgur.com/22L7CZx.png[/img]
+
+Don't forget to make that string also to be public!
+
+Now, we back on the browser window again and copy link address of the "votes.json" from the list, and then paste it into the third index:
+[img]http://i.imgur.com/XpvmplH.png[/img]
+
+Because it's also a POST request, me must fill the Post field too. In the browser we focus again on the "Form Data" (below "Request Headers")[b][/b]:
+[img]http://i.imgur.com/phLx0lY.png[/img]
+
+As you have seen eariler, we form request like this: [code]uninitialized=true&to=3&oauth_signature_method=HMAC-SHA1&oauth_consumer_key=%oauthkey%[/code]
+
+As usual, we fill the additional headers with needed data (but this time we add "uid" and "auth" string into the cookies), and we got this:
+[img]http://i.imgur.com/tcuJmOb.png[/img]
+
+Note: You can make all strings to be Crucial, if you want to see if commands for them work correctly.
+
+And that's it! :) You can now test the config or pass it to someone to do it for you if you don't want to search for proxy, since you've voted already from your IP (I don't know will it work if you remove the votes in the browser, since it's another session).

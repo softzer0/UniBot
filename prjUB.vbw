@@ -1,0 +1,11 @@
+UniTextBox = 66, 84, 985, 555, C, 66, 84, 917, 537, C
+cAsyncRequest = 132, 168, 1008, 622, C
+cAsyncRequests = 66, 84, 942, 538, C
+MD5Hash = 0, 0, 0, 0, C
+Enc64 = 0, 0, 0, 0, C
+modUnregCOM = 110, 110, 900, 574, C
+modS = 110, 140, 986, 594, C
+frmInput = 132, 168, 1008, 622, C, 154, 196, 1030, 650, C
+frmMain = 44, 56, 920, 510, Z, 22, 28, 880, 480, C
+clsInTray = 198, 198, 988, 662, C
+modInTray = 88, 88, 878, 552, C

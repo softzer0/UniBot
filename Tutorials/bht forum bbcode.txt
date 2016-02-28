@@ -1,0 +1,255 @@
+Don't know how else to start, so I'll start with FAQ about this tool:
+
+[b]What is UniBot?[/b]
+- UniBot is a unique program that is used for quick and easy creation of HTTP bots, without knowledge of any programming language and without any torment from designing GUI. It can be found here: [code]http://mikisoft.me/programs/unibot[/code]
+
+Virus scan: [url]https://www.virustotal.com/en/file/514a175f936c822ebd9e335e85030ac0618efb15fddf5d0c53f6a9768631f069/analysis/1431379002[/url]
+More analysis:
+[url]http://anubis.iseclab.org/?action=result&task_id=19ae0e85f8f78d07489646ae1f38178c6[/url]
+[url]https://malwr.com/analysis/ZTkwNjdlMTliZGQzNGZlNDgwM2U1Nzg2OThiMmMyMmE[/url]
+
+[b]For what is it actually used?[/b]
+- You can create whatever thing comes to your mind, but most of it are some simple bots on which you will substantially lose time creating them in some IDE.
+
+[b]Does that mean I can create any type of bot?[/b]
+- Yes, if you are skilled enough. You can create for example bots for voting or commenting, or you can make some bot that will rip out specific content from pages on some site, etc.
+
+[b]I have opened the program and nothing seems to be clear to me. Care to explain?[/b]
+- That's why I decided to make this tutorial because interface of the program looks complicated, but once you begin to understand everything that I have presented in the following, it should be much clearer (at least I hope so).
+
+So, let's start...
+
+[size="5"][i][color=#00BFFF]--- User interface ---[/color][/i][/size]
+
+As you have seen if you've already downloaded and run the program, the interface may seem a little hard to understand, but don't be afraid. The following picture should cover most of the things that you'll need to know:
+
+[img]http://i.imgur.com/CGmOKGX.png[/img]
+
+[b][u]index[/u][/b] - each index contains of one HTTP request ([i]GET[/i] or [i]POST[/i]) or/and logical statement(s) ([i]If-Then[/i]) or/and public/output string(s)
+[b][u]strings[/u][/b] - that is data which is gathered before or after the execution of the request, depending on where the string is actually used (on this topic I'll write most because it's very important to know)
+[b][u]If clauses[/u][/b] - a place to test strings if they meet certain conditions, and on that basis to decide what next to do (ie. which is next index or to stop the execution of the process)
+[b][u]results[/u][/b] - a place where the string results are shown (if that is enabled in their options)
+
+[size="5"][i][color=#00BFFF]--- Indexes ---[/color][/i][/size]
+
+Like I said, indexes must contain [b]at least one[/b] request or logical statement for solving, or public/output string. We'll focus on the first.
+As you know, the definition of each HTTP bot is to assemble and send a specific HTTP requests, in order to achieve a specific goal. So in this program there are indexes, that present a separate templates of certain requests by which program is headed. As can be seen, each index can have a name for easier orientation.
+To complete the formation of a HTTP request, there are two important items: [i]POST[/i] data and additional [i]headers[/i], which are starting to appear mostly from the second request by gathering the results of the strings. Don't be confused because I only mention HTTP requests - [b]HTTPS[/b] is supported, too.
+
+[size="5"][i][color=#00BFFF]--- Strings ---[/color][/i][/size]
+
+This is the key point of the program, so you should pay special attention in order to learn to make bots after finishing this.
+
+We'll begin with the facts:
+[i]- strings usually occur after execution of the first request
+- each string should contain at least one command
+- command that determines what will be the result must be valid and in accordance with the request that was previously sent
+- most of the strings are essential for the continuation of the process
+- they're executed depending on where they are used - [b]before[/b] or [b]after[/b] sending request
+- their usage is [b]%name%[/b] (where "name" is a name of the string)
+- if it isn't public/output, the string will not be executed if there is no place in the index where it is used[/i]
+
+If you understand this then we go into analysis of a string that contains one command: [code]'Hey!'+rpl('Hello, world!','world','Miki')[/code] Now let's analyze its parts:
+
+[i]'Hey!'[/i] - everything that is under a [b]single apostrophe[/b] represents a constant, and this constant is located at the beginning of the string so that will be the first thing printed into it
+
++ - character for merging a command with a constant, or with an another command
+
+[i]rpl('Hello, world!','world','Miki')[/i] - it can be assumed that this is the command for replacing specific text, so in this case in the text "Hello, world!" it replaces "world" with "Miki"
+
+The overall result would be: [quote]Hey!Hello, Miki![/quote] These are actually some of the most basic things you need to know if you want to go into the world of programming, but I wouldn't call this real programming because you must know a lot more than working with strings. Anyway, moving on...
+
+If you haven't heard of [b][url=http://regular-expressions.info]regular expressions[/url][/b], then you should first look at them because they are very important for the formation of the string result. I will not talk about that, because you have a lot of examples and explanations all over the Internet.
+The basic command for executing them (which looks like previous) is as follows: [code]rg(source,regex,replacement)[/code] Example: [code]rg('Hey!Hello, Miki!',', (.*?)!','$1')[/code] Result: [quote]Miki[/quote]
+
+[i][color=#80BF40]Independent commands:[/color][/i]
+These are commands that are processed even if they're located in the constants ie. under apostrophes.
+
+[i]First and most important command is:[/i] [b][src][/b]
+In its place there will be a complete page source (after completing request of course), with response headers at the beginning.
+
+[i]Second important command is:[/i] [b][nl][/b]
+Considering that the commands and the constants are written only in one line, I had to find a way to print the constants in multiple lines, so in place of this command a new line separator will be printed.
+
+[i]Third:[/i] [b][rnd][/b]
+In its place will be put random generated characters (upper and/or lower case letters, numbers and symbols), or a number from a given range.
+To determine the range of characters that will be included, between the last letter and ] you have to add some of these letters:
+U - since the default setting is to include only lowercase letters, this command specifies that only [i]uppercase[/i] letters are considered
+M - [i]mixed-case[/i]: mixed uppercase and lowercase letters
+L - includes only [i]letters[/i]
+D - includes only [i]numbers[/i]
+S - includes only [i]symbols[/i]
+The last three letters that define a range of characters can be combined, so we have the following example to generate random email addresses: [quote]'[rnd[color=#FF0000]LD[/color]]@gmail.com'[/quote] Result would be: [quote]6g4fog9bdl1fajn@gmail.com[/quote] As you can see, there is a default number of characters to be printed, and it's 15. To change this, again at the end we add number of characters that we want to be printed: [quote]'[rndLD[color=#FF0000]8[/color]]@gmail.com'[/quote] Result: [quote]q6pxd1hp@gmail.com[/quote]
+As I mentioned above, there is another thing about this command - and that is to generate a random number from the specified range. Its usage is very simple: [code]'[rnd5-10]'[/code] Obviously, this will generate some number between 5 and 10.
+
+[i]Fourth:[/i] [b][inp][/b]
+In the place of this command will be the user input, which usage is equivalent to the command above (except the U and M letters that are unnecessary in this case), so I will not say anything more about this.
+
+[i][color=#80BF40]String options:[/color][/i]
+After defining the string, the button next to it ("...") will be enabled which represent the options for that string. Click on it to get the following little window, where we choose which options will be used:
+[img]http://i.imgur.com/wQuf3Ao.png[/img]
+[b][u]Crucial[/u][/b] - it is important for the continuation of the process
+[b][u]Public[/u][/b] - it is available in the other indexes for modification and usage
+[b][u]Array[/u][/b] - after processing the string, if more than one result occurs (when using [i]regex[/i] or [i]input[/i]), this option applies the template to each of them separately (by making [i]sub-threads[/i]), but if the option is disabled then only the first result is used
+[b][u]Output[/u][/b] - this is the option that will show the string results in the main window
+
+[size="5"][i][color=#00BFFF]--- If clauses ---[/color][/i][/size]
+
+The next are If clauses, which of course are not required if there is a HTTP request in a given index. If both are included, then the request will be executed first with all the strings that are with it, and then the If clauses with its strings. (After that the public and output strings that haven't been put in the HTTP request nor the If clauses will be executed.)
+It is a simple principle of making them, so everyone could understand it without explanation (even better if he knows the mathematical logic, ie. the basics of programming). What I will mention is the operation depending on the results of an entire If clause, which will of course be one of the two possible outcomes - in the case where the If clause is true and the case where it is false. For the both cases, the options are the same.
+We see on the right side option "Change proxy" - if the seconds to wait are not defined, it changes current to the next proxy address before proceeding to the next index ("Go to") or finishing process ("Finish"). If there is no available proxy address and the seconds are defined, then the process will not be stopped because seconds to wait will be chosen as alternative.
+
+And that's it.
+
+[size="5"][i][color=#00BFFF]--- Additional stuff ---[/color][/i][/size]
+
+[i][color=#80BF40]Manipulation with indexes:[/color][/i]
+You don't have to manually modify configuration file to remove or to insert indexes, instead of that do this:
+1. For insertinng an index, press [b]Alt+I[/b]. If the index is last, it will be duplicated.
+2. For removing an index, press [b]Alt+R[/b].
+
+[i][color=#80BF40]Proxy and thread settings:[/color][/i]
+[img]http://i.imgur.com/OjdTRfi.png[/img]
+[u]Same proxy for each thread[/u] - every thread will act independently with a proxy list
+
+[i][color=#80BF40]Other (dependent) string commands:[/color][/i]
+enc(text) - uses [i]URL encode[/i] on given text
+dec(text) - uses [i]URL decode[/i] on given text
+u(text) - converts the text to [i]uppercase[/i]
+l(text) - converts the text to [i]lowercase[/i]
+b64(text) - encrypts the text with [i]Base64[/i]
+md5(text) - encrypts the text with [i]MD5[/i]
+<file> - loads the given file as text (by positioning to the folder where is the program itself)
+[i][color=#80BF40]Other independent string commands:[/color][/i]
+[oind] – previous array index (ie. last number from origin)
+[aind] – current array index
+[dt] - current date & time
+[thr] - current thread
+
+[i][color=#80BF40]multipart/form-data POST requests with files:[/color][/i] [code]POST /?action=analyze HTTP/1.1
+Host: samplesite.org
+Content-Type: multipart/form-data; boundary=-----------------------------280841152422961
+Content-Length: 6818
+-----------------------------280841152422961
+Content-Disposition: form-data; name="DataType"
+
+file
+-----------------------------280841152422961
+Content-Disposition: form-data; name="ImageFile"; filename="picture.jpg"
+Content-Type: image/jpeg
+
+ÿØÿà(...)[/code] For the request above, we type this into the Post field: [code]['DataType':'file';'ImageFile':<picture.jpg>][/code]
+
+[i][color=#80BF40]String builder:[/color][/i]
+[img]http://i.imgur.com/S3XxGTD.png[/img]
+In the field for entering string commands, (if it's not blank then before everything) type [b][build][/b] and hit Enter.
+
+[size="5"][i][color=#00BFFF]--- The finish ---[/color][/i][/size]
+
+That's all? Well, it's not! I didn't talk about some less important things which will only additionally "overload" this tutorial, so you have to explore it by yourself if you are really interested. Maybe you'll find something unexpected... :)
+
+[size="6"]Here is a tutorial for making a functional configuration:[/size]
+
+Note: You'll need Google Chrome or Mozilla Firefox browser.
+
+Let's say we want to make a bot that will give a vote here (edit: choose another since this is closed): [code]http://visualstudio.uservoice.com/forums/121579/suggestions/7462243[/code]
+
+First of all, we open UniBot and paste that URL into the first index:
+[img]http://i.imgur.com/QsX3E3G.png[/img]
+
+Then we open the browser and go to incognito/private browsing mode to be sure that none of the cookies exist.
+After that, we open developer console (Ctrl+Shift+I), select Network tab and then navigate to the above URL.
+We'll see something like this:
+[img]http://i.imgur.com/G67Kwym.png[/img]
+
+Now, we go to the top of the list on the right where is developer window and select the first item. A new window will show below, so we select "Headers" tab and then focus on "Response Headers":
+[img]http://i.imgur.com/rzCl2zv.png[/img]
+
+For us the important thing will be "Set-Cookie" parameters, so we see that they're two unusual (ID cookies):
+__cfduid
+_session_id
+
+The response headers are also part of the [b][src][/b], so we have to extract that two values from it using two [i]regex[/i] commands below: [code]rg('[src]','__cfduid=(.*?);')[/code] [code]rg('[src]','_session_id=(.*?);')[/code]
+
+We put these commands where they belong:
+[img]http://i.imgur.com/Nj2CESC.png[/img]
+
+Then we have to make these strings to be public, because we'll use them in another indexes. For the each of them, go to options ("...") and check "Public":
+[img]http://i.imgur.com/0o24E2z.png[/img]
+
+Now we'll focus on the browser window and clear the items in the list by clicking here:
+[img]http://i.imgur.com/dGuH13z.png[/img]
+
+After that, we should give a vote and catch that request. Click on the "Vote" button on the page and select a number of votes. We will now see this:
+[img]http://i.imgur.com/OCdCZlS.png[/img]
+
+You can see that the first item and after it another one in the list is a POST request. We click on the first and select again "Headers", but we now focus on the "Request Headers" and notice these things:
+[img]http://i.imgur.com/dhVTsWc.png[/img]
+
+There is some another parameter (CSRF token) that we haven't catched, and it must be in the page source if it wasn't in the very first response header from above. We open up the page source (Ctrl+U) and find its value:
+[img]http://i.imgur.com/CZlTAxG.png[/img]
+
+We have now a problem with forming a command to extract that value from source. It can't be like this: [code]rg('[src]','<meta content="(.*?)"','$1') [/code] Since there are two meta content tags, the result would be the first: [code]authenticity_token[/code] We solve this by pointing out to start from the second result. Since the results start from 0 then for the second result command will be: [quote]rg('[src]','<meta content="(.*?)"','$1'[color=#FF0000],1[/color])[/quote]
+
+We repeat the steps for making a public string from above, and we got now the current (but not final) look of the first index:
+[img]http://i.imgur.com/auZAKo8.png[/img]
+
+If you have done all of this, you can select the second index:
+[img]http://i.imgur.com/b1hGOzr.png[/img]
+
+We'll now back to the browser window and right click on the first item from the list, and select to copy link address:
+[img]http://i.imgur.com/0MzD1CD.png[/img]
+
+The URL is now copied into our clipboard. We paste it into the URL field in UniBot:
+[img]http://i.imgur.com/p7uKN4N.png[/img]
+
+Now, we back on the "Request Headers" in the browser below list, to look for the POST data that was sent:
+[img]http://i.imgur.com/lzwCdUT.png[/img]
+
+We'll form it like this for the Post field in UniBot and ignore "debug" parameters: [code]site2=1&forum_id=121579[/code] It will now look like this:
+[img]http://i.imgur.com/701pHJH.png[/img]
+
+Also, we must include as additional headers cookies (in strings "cfduid" and "sessionuid") that we have extracted earlier, and the CSRF token:
+[img]http://i.imgur.com/cOy2H2G.png[/img]
+
+Now we'll back on the browser. We will focus on the "Response Headers", to see yet another unusual cookies (ID and for authentication):
+[img]http://i.imgur.com/V5Y0uMD.png[/img]
+
+Again, we repeat the previous steps for making public strings with these commands: [code]rg('[src]','_uservoice_uid=(.*?);')[/code] [code]rg('[src]','auth_token=(.*?);')[/code]
+
+And after you have done all of that, the second index finally should look like this:
+[img]http://i.imgur.com/00FJF9E.png[/img]
+
+Now, we click in the browser on the "votes.json" item in the list and focus on its "Request Headers". We'll see this:
+[img]http://i.imgur.com/C1d5uru.png[/img]
+
+Again, we find its content in page source:
+[img]http://i.imgur.com/CACR3f9.png[/img]
+
+We'll use this command to extract it: [code]rg('[src]','client_key: "(.*?)"','$1')[/code]
+
+We back to the first index and put that command into a new string, so it shoud look like this:
+[img]http://i.imgur.com/22L7CZx.png[/img]
+
+Don't forget to make that string also to be public!
+
+Now, we back on the browser window again and copy link address of the "votes.json" from the list, and then paste it into the third index:
+[img]http://i.imgur.com/XpvmplH.png[/img]
+
+Because it's also a POST request, me must fill the Post field too. In the browser we focus again on the "Form Data" (below "Request Headers"):
+[img]http://i.imgur.com/phLx0lY.png[/img]
+
+As you have seen eariler, we form request like this: [code]uninitialized=true&to=3&oauth_signature_method=HMAC-SHA1&oauth_consumer_key=%oauthkey%[/code]
+
+As usual, we fill the additional headers with needed data (but this time we add "uid" and "auth" string into the cookies), and we got this:
+[img]http://i.imgur.com/tcuJmOb.png[/img]
+
+Note: You can make all strings to be Crucial, if you want to see if commands for them work correctly.
+
+And that's it! :) You can now test the config or pass it to someone to do it for you if you don't want to search for proxy, since you've voted already from your IP (I don't know will it work if you remove the votes in the browser, since it's another session).
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+Here is a video of creating Twitter spam bot (watch it in 720p):
+
+[video=youtube;52WSwDY9nYY]https://www.youtube.com/watch?v=52WSwDY9nYY[/video]

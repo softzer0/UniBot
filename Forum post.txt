@@ -1,0 +1,31 @@
+Screenshot:
+[img]http://i.imgur.com/1GQK8Nf.jpg[/img]
+
+Description: [quote]With this tool you can make any HTTP bot that you imagine - easily and without any knowledge of some programming language![/quote]
+Comment: [quote]This is the first application that is capable of creating unique HTTP bots. With your own configurations, you can configure this program to automatically do some jobs on desired sites i.e. online services (e.g. voting, commenting, scraping, etc.)...[/quote]
+
+Features: [quote]- Modularity (configurations)
+- Plugins
+- EXE bot
+- Options: Threads, Proxy, Shortcut creation, Batch commands execution on finish, Fine tuning(, ...)
+(- New features.)
+And more...[/quote]
+
+Change log:
+[quote]v1.0:
+* First released version; option "Make silent bot" isn't yet enabled
+
+(VERSION):
+(- New features)[/quote]
+
+Download links:
+[code](2SH)[/code]
+[i]Mirror:[/i] [code]http://mikisoft.me/UniBot%20(VERSION)%20-%20by%20MikiSoft.zip[/code]
+
+Virus scan (heuristic detections are false-positive): [code](SCAN)[/code]
+
+[i]P.S. If you have any questions, comments, concerns, or if you want to report bugs that you have seen, feel free to contact me (and feedback, of course) on my blog - http://mikisoft.me, or join here - http://unibot.boards.net[/i]
+
+====
+
+Notes: Zameni "(VERSION)" sa trenutnom (novom) verzijom programa, "(2SH)" sa download linkom programa (preko 2shared-a), i "(SCAN)" sa linkom od virus skena (preko VirusTotal-a)...
